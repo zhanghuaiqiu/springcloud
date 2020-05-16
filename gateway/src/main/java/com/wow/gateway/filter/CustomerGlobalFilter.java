@@ -7,6 +7,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * author: zhq
  * 网关自定义全局过滤器。
  * 个人理解：
  * 全局过滤器和网关过滤器只是在业务意义上的区分而已。
@@ -18,7 +19,6 @@ import reactor.core.publisher.Mono;
  * 1. 限流。(每个IP可以访问一段时间内的总量)
  * 2. 熔断。(访问微服务出现等待)
  * 3. ...
- *
  */
 public class CustomerGlobalFilter implements GlobalFilter, Ordered {
     @Override

@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * author: zhq
  * 自定义网关过滤器 实现方式二 [用过滤器工厂实现]
  */
 @Component
