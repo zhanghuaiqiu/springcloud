@@ -1,0 +1,23 @@
+server:
+  port: 8763
+spring:
+  application:
+    name: nacos-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.106:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: hello_route
+          filters:
+            - Customer=true #开启自定义网关过滤器工厂模式
+          uri: lb://nacos-customer
+          predicates:
+            - Method=GET
+
+#自定义网关过滤工厂开关  enabled[开启], [其他就是关闭]
+customerGatewayFilter: unabled

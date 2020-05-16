@@ -1,0 +1,32 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: nacos-customer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.106:8848
+feign:
+  hystrix:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+# Feign 的调用，总共分为两层，即 Ribbon 的调用和 Hystrix（熔断处理） 的调用.
+# 服务提供者 的服务睡眠时间 和 ribbon，hystrix 超时时间还没有完全搞清楚， 后者需要大于前者一定范围才生效
+ribbon:
+  ConnectTimeout: 2000
+  ReadTimeout: 2000
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enable: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
