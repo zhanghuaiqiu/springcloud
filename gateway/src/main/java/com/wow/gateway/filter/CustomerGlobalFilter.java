@@ -1,8 +1,12 @@
 package com.wow.gateway.filter;
 
+import com.wow.gateway.config.GateWayConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -19,11 +23,21 @@ import reactor.core.publisher.Mono;
  * 1. 限流。(每个IP可以访问一段时间内的总量)
  * 2. 熔断。(访问微服务出现等待)
  * 3. ...
+ *
+ * 备注：
+ * CustomerGlobalFilter 全局过滤器。不需要配置。只要在类前加入 @Component 注解。并在所有路由上生效.
+ * 这种写法导致执行顺序: pre filter ---> gatewayFilter ---> post filter
+ * 和在Configuration 配置全局过滤器 执行顺序 有不同. ???
  */
+@Component
 public class CustomerGlobalFilter implements GlobalFilter, Ordered {
+    private static final Logger log = LoggerFactory.getLogger(CustomerGlobalFilter.class );
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        return null;
+        log.info("-------->GlobalFilter: pre filter");
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            log.info("-------->GlobalFilter: post filter");
+            }));
     }
 
     @Override

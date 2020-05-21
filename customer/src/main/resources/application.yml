@@ -6,7 +6,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.1.106:8848
+        server-addr: 192.168.1.104:8848
 feign:
   hystrix:
     enabled: true
@@ -20,6 +20,10 @@ feign:
 ribbon:
   ConnectTimeout: 2000
   ReadTimeout: 2000
+
+nacos-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #配置规则 随机
 
 hystrix:
   command:

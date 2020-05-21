@@ -6,18 +6,23 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.1.106:8848
+        server-addr: 192.168.1.104:8848
     gateway:
       discovery:
         locator:
           enabled: true
-      routes:
-        - id: hello_route
-          filters:
-            - Customer=true #开启自定义网关过滤器工厂模式
-          uri: lb://nacos-customer
-          predicates:
-            - Method=GET
 
 #自定义网关过滤工厂开关  enabled[开启], [其他就是关闭]
 customerGatewayFilter: unabled
+
+#路由监控(还没搞清怎么用)
+management:
+  endpoint:
+    beans:
+      enabled: true
+    mappings:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, info, mappings, beans

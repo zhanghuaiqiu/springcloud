@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
 import java.time.Instant;
 
 /**
@@ -31,7 +31,7 @@ public class CustomerGatewayFilter implements GatewayFilter, Ordered {
                     /* 获取路由业务的总耗时 */
                     long startTime = exchange.getAttribute(COUNT_START_TIME);
                     long gobalTime =(Instant.now().toEpochMilli() - startTime);
-                    log.info(exchange.getRequest().getURI().getRawPath() + ": " + gobalTime + "ms");
+                    log.info("--------> GateWayFilter:" + exchange.getRequest().getURI().getRawPath() + ": " + gobalTime + "ms");
                 })
         );
     }
@@ -47,6 +47,6 @@ public class CustomerGatewayFilter implements GatewayFilter, Ordered {
      */
     @Override
     public int getOrder() {
-        return 0;
+        return 3;
     }
 }
