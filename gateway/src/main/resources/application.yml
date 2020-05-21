@@ -11,6 +11,29 @@ spring:
       discovery:
         locator:
           enabled: true
+      #在配置文件中设置某个服务的路由信息以及网关熔断器
+      routes:
+        - id: anotherCustomer
+          uri: lb://nacos-customer
+          predicates:
+            - Method=GET
+          #网关设置微服务熔断器
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallbackcontroller
+
+#熔断器超时设置
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        timeout:
+          enable: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
 
 #自定义网关过滤工厂开关  enabled[开启], [其他就是关闭]
 customerGatewayFilter: unabled

@@ -12,6 +12,11 @@ public class customerController {
 
     @GetMapping("/client_hello/{msg}")
     public String client_hello(@PathVariable String msg){
+        try {
+            Thread.sleep(3*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return customer.hello(msg);
     }
 }
